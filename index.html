@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Lagoon — Café & Kitchen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,300..800;1,300..600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bone:#f4f1e9;
+    --bone-2:#ebe6d9;
+    --ink:#15241a;
+    --ink-soft:#28402f;
+    --green:#2c6444;
+    --green-bright:#3c8559;
+    --honey:#c98a3c;
+    --honey-soft:#e0b074;
+    --muted:#6f7a6e;
+    --line:rgba(21,36,26,.12);
+    --line-soft:rgba(21,36,26,.07);
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+  body{
+    font-family:'Hanken Grotesk',sans-serif;
+    background:var(--bone);
+    color:var(--ink);
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--honey);color:#fff}
+
+  /* subtle paper grain */
+  body::before{
+    content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.4;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;z-index:2;
+    min-height:92vh;
+    display:flex;flex-direction:column;justify-content:space-between;
+    padding:2.4rem clamp(1.4rem,5vw,4rem) 2.6rem;
+    background:
+      radial-gradient(140% 120% at 80% 0%, #1d3526 0%, #15241a 55%, #101c14 100%);
+    color:var(--bone);
+    overflow:hidden;
+  }
+  .hero-top{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:.72rem;letter-spacing:.28em;text-transform:uppercase;
+    color:var(--honey-soft);font-weight:500;position:relative;z-index:3;
+    animation:fade .9s ease both;
+  }
+  .hero-top .dotline{flex:1;height:1px;background:rgba(224,176,116,.3);margin:0 1.4rem}
+
+  .hero-center{
+    position:relative;z-index:3;flex:1;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .hero-center .kicker{
+    font-size:.8rem;letter-spacing:.34em;text-transform:uppercase;
+    color:var(--green-bright);margin-bottom:1.6rem;font-weight:600;
+    animation:rise .8s .1s ease both;
+  }
+  .hero h1{
+    font-family:'Instrument Serif',serif;
+    font-size:clamp(4rem,15vw,12rem);
+    line-height:.82;letter-spacing:-.02em;font-weight:400;
+  }
+  .hero h1 em{font-style:italic;color:var(--honey-soft)}
+  .hero h1 .l1{display:block;animation:rise .9s .15s ease both}
+  .hero h1 .l2{display:block;animation:rise .9s .3s ease both}
+  .hero .lede{
+    margin-top:2rem;max-width:34ch;font-size:clamp(1.05rem,2vw,1.35rem);
+    color:rgba(244,241,233,.8);font-weight:300;line-height:1.5;
+    animation:rise .9s .45s ease both;
+  }
+  .hero-bottom{
+    position:relative;z-index:3;display:flex;gap:2.6rem;flex-wrap:wrap;
+    border-top:1px solid rgba(244,241,233,.15);padding-top:1.6rem;
+    font-size:.82rem;color:rgba(244,241,233,.65);letter-spacing:.04em;
+    animation:fade 1s .6s ease both;
+  }
+  .hero-bottom b{display:block;color:var(--bone);font-weight:600;
+    font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;margin-bottom:.25rem}
+
+  /* faint oversized leaf */
+  .hero .glyph{
+    position:absolute;right:-6vw;bottom:-8vw;z-index:2;
+    width:min(60vw,640px);height:min(60vw,640px);opacity:.07;color:#fff;
+    animation:float 14s ease-in-out infinite;
+  }
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:sticky;top:0;z-index:40;
+    background:rgba(244,241,233,.85);
+    backdrop-filter:blur(14px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-scroll{
+    display:flex;gap:.2rem;overflow-x:auto;padding:.55rem clamp(1rem,5vw,4rem);
+    max-width:1240px;margin:0 auto;scrollbar-width:none;
+  }
+  .nav-scroll::-webkit-scrollbar{display:none}
+  .nav-scroll a{
+    flex:0 0 auto;text-decoration:none;color:var(--ink-soft);
+    font-size:.78rem;letter-spacing:.06em;font-weight:600;
+    padding:.5rem .85rem;border-radius:100px;white-space:nowrap;
+    transition:.22s ease;
+  }
+  .nav-scroll a:hover{color:var(--green);background:var(--bone-2)}
+  .nav-scroll a.active{background:var(--ink);color:var(--bone)}
+
+  /* ---------- MENU ---------- */
+  main{
+    position:relative;z-index:2;
+    max-width:1240px;margin:0 auto;
+    padding:clamp(3rem,7vw,6rem) clamp(1.4rem,5vw,4rem) 3rem;
+  }
+  .section{margin-bottom:clamp(3.4rem,6vw,5.5rem);scroll-margin-top:78px}
+  .section-head{
+    display:grid;grid-template-columns:auto 1fr;align-items:end;
+    gap:1.2rem;margin-bottom:2.2rem;
+  }
+  .section-head .num{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(1.4rem,3vw,2rem);color:var(--honey);line-height:1;
+  }
+  .section-head h2{
+    font-family:'Instrument Serif',serif;font-weight:400;
+    font-size:clamp(2.4rem,6vw,4rem);color:var(--ink);
+    line-height:.9;letter-spacing:-.01em;
+  }
+
+  .grid{
+    display:grid;grid-template-columns:repeat(2,1fr);
+    column-gap:clamp(2.5rem,5vw,5rem);
+  }
+  @media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+  .item{
+    display:flex;align-items:baseline;gap:.7rem;
+    padding:.85rem 0;border-bottom:1px solid var(--line-soft);
+  }
+  .item:hover .name{color:var(--green)}
+  .item .name{font-weight:600;font-size:1.05rem;transition:color .2s;letter-spacing:-.01em}
+  .item .desc{
+    display:block;font-size:.8rem;color:var(--muted);font-weight:400;
+    margin-top:.15rem;line-height:1.45;letter-spacing:.01em;
+  }
+  .item .dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px);min-width:16px}
+  .item .price{
+    font-family:'Instrument Serif',serif;font-size:1.2rem;
+    color:var(--ink);white-space:nowrap;letter-spacing:.01em;
+  }
+  .item .price small{font-size:.7rem;color:var(--muted);
+    font-family:'Hanken Grotesk';font-weight:600;letter-spacing:.06em;}
+
+  .subhead{
+    grid-column:1/-1;font-size:.74rem;font-weight:700;
+    letter-spacing:.2em;text-transform:uppercase;color:var(--honey);
+    margin:1.6rem 0 .3rem;display:flex;align-items:center;gap:.8rem;
+  }
+  .subhead::after{content:"";flex:1;height:1px;background:var(--line-soft)}
+
+  .note-card{
+    grid-column:1/-1;margin-top:1.1rem;padding:1rem 1.2rem;
+    background:var(--bone-2);border-radius:14px;font-size:.86rem;
+    color:var(--ink-soft);border:1px solid var(--line-soft);
+  }
+  .note-card b{color:var(--honey)}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    position:relative;z-index:2;overflow:hidden;
+    background:var(--ink);color:var(--bone);
+    padding:clamp(3.5rem,7vw,6rem) clamp(1.4rem,5vw,4rem);
+    text-align:center;
+  }
+  footer .big{
+    font-family:'Instrument Serif',serif;font-style:italic;
+    font-size:clamp(2.4rem,7vw,5rem);line-height:1;color:var(--honey-soft);
+  }
+  footer p{margin-top:1rem;color:rgba(244,241,233,.7);font-weight:300;font-size:1.05rem}
+  footer .meta{
+    margin-top:2.4rem;display:flex;gap:2.4rem;justify-content:center;flex-wrap:wrap;
+    font-size:.8rem;color:rgba(244,241,233,.6);
+  }
+  footer .meta b{display:block;color:var(--bone);font-size:.7rem;
+    letter-spacing:.2em;text-transform:uppercase;margin-bottom:.3rem;font-weight:600}
+  footer .gst{margin-top:2.6rem;font-size:.74rem;letter-spacing:.24em;
+    text-transform:uppercase;color:var(--green-bright);font-weight:600}
+
+  /* ---------- ANIM ---------- */
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes rise{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(6deg)}}
+  .reveal{opacity:0;transform:translateY(22px);transition:.75s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="monstera" viewBox="0 0 100 100">
+    <path fill="currentColor" d="M50 4C30 10 14 28 12 52c-1 14 4 28 14 38 2-12 7-20 15-26-6-1-11-4-15-9 7 3 14 3 20 0-7-4-12-10-14-18 8 6 16 8 24 6-7-6-11-14-12-24 9 8 18 11 27 9C64 22 58 12 50 4Z M50 4c20 6 36 24 38 48 1 14-4 28-14 38-2-12-7-20-15-26 6-1 11-4 15-9-7 3-14 3-20 0 7-4 12-10 14-18-8 6-16 8-24 6 7-6 11-14 12-24-9 8-18 11-27 9C36 22 42 12 50 4Z"/>
+  </symbol>
+</svg>
+
+<header class="hero">
+  <span class="glyph"><svg width="100%" height="100%"><use href="#monstera"/></svg></span>
+
+  <div class="hero-top">
+    <span>Laamu Atoll · Maldives</span>
+    <span class="dotline"></span>
+    <span>Est. Menu</span>
+  </div>
+
+  <div class="hero-center">
+    <div class="kicker">Café · Kitchen · Juice Bar</div>
+    <h1><span class="l1">The</span><span class="l2"><em>Lagoon</em></span></h1>
+    <p class="lede">Fresh-pressed juices, sizzling kottu, kebabs &amp; tropical comfort food — served all day.</p>
+  </div>
+
+  <div class="hero-bottom">
+    <div><b>Hours</b>Open daily · 7am – late</div>
+    <div><b>Service</b>Dine in &amp; takeaway</div>
+    <div><b>Pricing</b>All prices incl. GST</div>
+  </div>
+</header>
+
+<nav><div class="nav-scroll" id="navScroll"></div></nav>
+
+<main id="menu"></main>
+
+<footer>
+  <div class="big">See you soon.</div>
+  <p>Thank you for dining with us.</p>
+  <div class="meta">
+    <div><b>Find us</b>Laamu Atoll, Maldives</div>
+    <div><b>Order</b>Dine in &amp; takeaway</div>
+    <div><b>Open</b>Daily · 7am – late</div>
+  </div>
+  <div class="gst">All prices include GST</div>
+</footer>
+
+<script>
+/* ============================================================
+   MENU DATA — edit names / prices / descriptions here.
+   p: a number (auto-formatted as MVR 0.00) or a string for specials.
+   ============================================================ */
+const MENU = [
+  { title:"Hot Drinks", items:[
+    {n:"Hot Milk",p:15},{n:"Hot Milo",p:25},{n:"Black Tea",p:4},{n:"Milk Tea",p:18},
+    {n:"Hot Chocolate",p:55},{n:"Bombay Tea",p:25},{n:"Ginger Tea",p:20},{n:"Lemon Tea",p:15},
+    {n:"Ginger Lemon Tea",p:23},{n:"Green Tea",p:12},{n:"Nescafé Black Coffee",p:10},
+    {n:"Nescafé Milk Coffee",p:20},{n:"Lavazza Milk Coffee",p:28},{n:"Lavazza Black Coffee",p:25},
+    {n:"Lavazza Espresso Coffee",p:30}
+  ]},
+  { title:"Tea & Shaai", items:[
+    {n:"Lemon Tea",p:10},{n:"Massala Tea",p:10},{n:"Bombay Tea",p:10},
+    {n:"Cardamom Tea",p:10},{n:"Ice Lemon Tea",p:45}
+  ]},
+  { title:"Fresh Juices", items:[
+    {n:"Orange",p:40},{n:"Lemon",p:40},{n:"Pineapple",p:55},{n:"Papaya",p:40},
+    {n:"Watermelon",p:40},{n:"Carrot",p:40},{n:"Carrot & Orange",p:55},{n:"Passion Fruit",p:40},
+    {n:"Cucumber",p:40},{n:"Apple",p:45},{n:"Mango",p:45},{n:"Kurumba",p:55}
+  ]},
+  { title:"Milkshakes", items:[
+    {n:"Ice Milk",p:20},{n:"Ice Coffee",p:40},{n:"Chocolate Milkshake",p:60},{n:"Vanilla Milkshake",p:60},
+    {n:"Strawberry Milkshake",p:60},{n:"Banana Milkshake",p:60},{n:"Mango Milkshake",p:60},
+    {n:"Lavazza Milkshake",p:60},{n:"Milo Milkshake",p:60},{n:"Coffee Milkshake",p:60},
+    {n:"Carrot Milkshake",p:60},{n:"Pineapple Milkshake",p:60},{n:"Falooda",p:40},
+    {n:"Ice Milo",p:"S 25 / L 40"},{n:"Coke Float",p:45}
+  ]},
+  { title:"Fizzy Drinks", items:[
+    {n:"Coke Can",p:18},{n:"Sprite Can",p:18},{n:"Coke Bottle",p:20},{n:"Sprite Bottle",p:20},
+    {n:"XL Energy Drink",p:38},{n:"Redbull Energy Drink",p:45}
+  ]},
+  { title:"Breakfast", items:[
+    {n:"Disk Mas'huni",p:40,d:"Disk / Mashuni / Omelette or Sausage / Black Tea or Juice"},
+    {n:"Disk Rihaakuru",p:45,d:"Disk / Rihaakuru / Omelette or Sausage / Black Tea or Juice"},
+    {n:"Roshi Mas'huni",p:40,d:"Roshi / Mashuni / Omelette or Sausage / Black Tea or Juice"},
+    {n:"Roshi Rihaakuru",p:40,d:"Roshi / Rihaakuru / Omelette or Sausage / Black Tea or Juice"},
+    {n:"Roshi Kulhimas",p:45,d:"Roshi / Kulhimas / Omelette or Sausage / Black Tea or Juice"},
+    {n:"Parata Kulhimas",p:55,d:"Parata / Kulhimas / Omelette / Black Tea or Juice"},
+    {n:"Continental Breakfast",p:45,d:"Bread / Jam / Butter / Omelette / Black Tea or Juice"}
+  ]},
+  { title:"Noodles", items:[
+    {n:"Tuna Fried Noodles",p:65},{n:"Chicken Fried Noodles",p:70},{n:"Beef Fried Noodles",p:75},
+    {n:"Valhoamas Noodles",p:70},{n:"Mix Noodles",p:85},{n:"Yummy Fried Noodles",p:80},
+    {n:"Malaysian Bamigoreng",p:95},{n:"Chef Special Bamigoreng",p:120},{n:"Chicken Biriyani Noodles",p:90},
+    {n:"Bamigoreng",p:85},{n:"Mongolian Chicken Noodles",p:88},{n:"Mongolian Beef Noodles",p:90},
+    {n:"Mongolian Mix Noodles",p:105},{n:"Vegetable Fried Noodles",p:45},{n:"Valhoamas Bamigoreng",p:70},
+    {n:"Beef Biriyani Noodles",p:90},{n:"Egg Fried Noodles",p:45},{n:"Seafood Fried Noodles",p:95},
+    {n:"Cuttle Fish Fried Noodles",p:95},{n:"Prawn Fried Noodles",p:95},{n:"Octopus Fried Noodles",p:95}
+  ]},
+  { title:"Rice", items:[
+    {n:"Tuna Fried Rice",p:65},{n:"Chicken Fried Rice",p:70},{n:"Beef Fried Rice",p:75},
+    {n:"Valhoamas Rice",p:70},{n:"Mix Rice",p:85},{n:"Yummy Fried Rice",p:80},
+    {n:"Malaysian Nasigoreng",p:95},{n:"Chef Special Nasigoreng",p:120},{n:"Chicken Biriyani Rice",p:90},
+    {n:"Nasigoreng",p:85},{n:"Mongolian Chicken Rice",p:88},{n:"Mongolian Beef Rice",p:90},
+    {n:"Mongolian Mix Rice",p:105},{n:"Vegetable Fried Rice",p:45},{n:"Valhoamas Nasigoreng",p:70},
+    {n:"Beef Biriyani Rice",p:90},{n:"Egg Fried Rice",p:45},{n:"Seafood Fried Rice",p:95},
+    {n:"Cuttle Fish Fried Rice",p:95},{n:"Prawn Fried Rice",p:95},{n:"Octopus Fried Rice",p:95},
+    {n:"Garlic Rice",p:35}
+  ]},
+  { title:"Kottu", items:[
+    {sub:"Roshi"},
+    {n:"Tuna Kottu Roshi",p:65},{n:"Chicken Kottu Roshi",p:70},{n:"Beef Kottu Roshi",p:75},
+    {n:"Valhoamas Kottu Roshi",p:65},{n:"Yummy Kottu Roshi",p:80},{n:"Seafood Kottu Roshi",p:125},
+    {n:"Octopus Kottu Roshi",p:90},{n:"Mixed Kottu Roshi",p:85},
+    {sub:"Parata"},
+    {n:"Tuna Kottu Parata",p:68},{n:"Chicken Kottu Parata",p:73},{n:"Beef Kottu Parata",p:78},
+    {n:"Valhoamas Kottu Parata",p:68},{n:"Yummy Kottu Parata",p:90},{n:"Seafood Kottu Parata",p:128},
+    {n:"Octopus Kottu Parata",p:93},{n:"Mixed Kottu Parata",p:90}
+  ]},
+  { title:"Submarine", items:[
+    {n:"Tuna Submarine",p:73},{n:"Chicken Submarine",p:83},{n:"Beef Submarine",p:95},
+    {n:"Chilli Chicken Submarine",p:93},{n:"Tandoori Chicken Submarine",p:98},{n:"Crispy Chicken Submarine",p:100}
+  ]},
+  { title:"Burger", items:[
+    {n:"Tuna Burger",p:68},{n:"Chicken Burger",p:73},{n:"Beef Burger",p:78},{n:"Grilled Tuna Burger",p:77},
+    {n:"Grilled Chicken Burger",p:92},{n:"Grilled Beef Burger",p:95},{n:"Crispy Chicken Burger",p:95},
+    {n:"Cheese Burger",p:92}
+  ]},
+  { title:"Pizza", items:[
+    {n:"Tuna Pizza",p:90},{n:"Chicken Pizza",p:105},{n:"Beef Pizza",p:110},{n:"Sausage Pizza",p:95},
+    {n:"Tandoori Chicken Pizza",p:133},{n:"Chilli Chicken Pizza",p:124},{n:"Vegetable Pizza",p:90},
+    {n:"Seafood Pizza",p:128},{n:"Octopus Pizza",p:110},
+    {note:"<b>Add-ons</b> — Additional pizza toppings (mushrooms, olives…) MVR 5.00 each"}
+  ]},
+  { title:"Sandwich", items:[
+    {n:"Tuna Sandwich",p:15},{n:"Chicken Sandwich",p:30},{n:"Beef Sandwich",p:35},
+    {n:"Grilled Cheese Sandwich",p:23},{n:"Vegetable Sandwich",p:25},{n:"Chilli Chicken Sandwich",p:35},
+    {n:"Club Sandwich",p:55},{n:"Chicken Club Sandwich",p:75},{n:"Chilli Chicken Club Sandwich",p:80},
+    {sub:"Large"},
+    {n:"Club Sandwich",p:65},{n:"Chicken Club Sandwich",p:85},
+    {n:"Chilli Chicken Club Sandwich",p:95}
+  ]},
+  { title:"Spaghetti", items:[
+    {n:"Hot Tuna",p:82,d:"Spaghetti / Macaroni"},{n:"Tunaaissa",p:82,d:"Spaghetti / Macaroni"},
+    {n:"Meat Balls",p:88,d:"Spaghetti / Macaroni"},{n:"Bolognese",p:82,d:"Spaghetti / Macaroni"},
+    {n:"Carbonara",p:82,d:"Spaghetti / Macaroni"},{n:"Aglio E Olio",p:88,d:"Spaghetti / Macaroni"},
+    {n:"Seafood",p:93,d:"Spaghetti / Macaroni"}
+  ]},
+  { title:"Chicken", items:[
+    {n:"Flaming Hot Chicken",p:135,d:"Thai Rice / Noodles & Boiled Vegetables"},
+    {n:"Chicken Chop Suey",p:93,d:"Veg Rice / Veg Noodles / Garlic Rice"},
+    {n:"Chicken Kebab — Portion",p:75},
+    {n:"Chicken Kebab",p:90,d:"Veg Rice / Veg Noodles / Garlic Rice"},
+    {n:"Chicken Kebab",p:124,d:"Chicken Rice / Chicken Noodles & Salad"},
+    {n:"Chicken Steak — Portion",p:75},
+    {n:"Chicken & Chips",p:67},
+    {n:"Pepper Chicken Steak",p:103,d:"French Fries & Salad"},
+    {n:"Fried Chicken — Portion",p:47},
+    {n:"Chilli Chicken — Portion",p:65},
+    {n:"Devilled Chicken — Portion",p:65},
+    {n:"Kankun Chicken — Portion",p:68},
+    {n:"Grilled Chicken — Portion",p:60},
+    {n:"Grilled Chicken",p:93,d:"French Fries & Salad"},
+    {n:"Grilled Chicken",p:93,d:"Boiled Vegetables"},
+    {n:"Chicken Fingers",p:88,d:"French Fries & Salad"},
+    {n:"Chicken Nuggets — Portion",p:65},
+    {n:"Crispy Fried Chicken — Portion",p:65},
+    {n:"Crispy Chicken Drumstick",p:100}
+  ]},
+  { title:"Lebanese Chicken", items:[
+    {n:"Lebanese Chicken",p:135,d:"Veg Rice / Veg Noodles / Garlic Rice / Lemon Rice"},
+    {n:"Lebanese Chicken — Panne",p:145},
+    {n:"Lebanese Chicken — Portion",p:110}
+  ]},
+  { title:"Beef", items:[
+    {n:"Kankun Beef — Portion",p:78},{n:"Chilli Beef — Portion",p:78},{n:"Devilled Beef — Portion",p:83},
+    {n:"Beef Kebab — Portion",p:78},
+    {n:"Beef Kebab",p:105,d:"Veg Rice / Veg Noodles / Garlic Rice"},
+    {n:"Beef Kebab",p:125,d:"Beef Rice / Beef Noodles & Salad"},
+    {n:"Beef Steak",p:90,d:"French Fries & Salad"},
+    {n:"Beef Steak",p:90,d:"Boiled Vegetables"},
+    {n:"Beef Chop Suey",p:105,d:"Veg Rice / Veg Noodles / Garlic Rice"},
+    {n:"Pepper Beef Steak",p:105,d:"French Fries & Salad"},
+    {n:"Pepper Beef Steak",p:105,d:"Boiled Vegetables"}
+  ]},
+  { title:"Fish", items:[
+    {n:"Fish & Chips",p:55},{n:"Fish & Chips — White Fish",p:60},
+    {n:"Fried Fish — Portion",p:40},{n:"Fried Fish — White Fish Portion",p:45},
+    {n:"Fish Kebab — Portion",p:53},
+    {n:"Fish Kebab",p:75,d:"Veg Rice / Veg Noodles / Garlic Rice & Salad"},
+    {n:"White Fish Kebab",p:78,d:"Veg Rice / Veg Noodles / Garlic Rice & Salad"},
+    {n:"Chilli Fish — Portion",p:47},
+    {n:"Devilled Fish — Portion",p:53},
+    {n:"Fish Fingers",p:78,d:"French Fries & Salad"},
+    {n:"Fish Fingers — White Fish",p:78,d:"With French Fries & Salad"},
+    {n:"Fish Moniya",p:78},
+    {n:"Grilled Fish",p:65,d:"French Fries & Salad"},
+    {n:"Grilled Fish",p:78,d:"Boiled Vegetables"},
+    {n:"Grilled Fish — White Fish",p:53,d:"Portion"},
+    {n:"Grilled Fish — White Fish",p:88,d:"With French Fries & Salad"},
+    {n:"Grilled Fish — White Fish",p:88,d:"& Boiled Vegetables"}
+  ]},
+  { title:"Indian Food", items:[
+    {n:"Chicken Massala — Full Chicken",p:200},{n:"Chicken Massala — Half Chicken",p:118},
+    {n:"Chicken Massala — Quarter Chicken",p:73},
+    {n:"Tandoori Chicken — Full Chicken",p:220},{n:"Tandoori Chicken — Half Chicken",p:123},
+    {n:"Tandoori Chicken — Quarter Chicken",p:68},
+    {n:"Chicken Kadai — Full Chicken",p:200},{n:"Chicken Kadai — Half Chicken",p:118},
+    {n:"Chicken Kadai — Quarter Chicken",p:73},
+    {n:"Indian Chicken Korma",p:73},{n:"Mixed Grill",p:154,d:"Chicken, Beef & Seafood"},
+    {n:"Chicken 65 — Portion",p:85},{n:"Indian Veg Korma",p:40}
+  ]},
+  { title:"Combo", items:[
+    {n:"Chicken Biriyani Combo",p:325,d:"Rice / Noodles"},
+    {n:"Yummy Combo",p:310,d:"Rice / Noodles"},
+    {n:"Tuna Combo",p:250,d:"Rice / Noodles"},
+    {n:"Bamigoreng Combo",p:315},
+    {n:"Chicken Combo",p:295,d:"Rice / Noodles"},
+    {n:"Beef Combo",p:315,d:"Rice / Noodles"},
+    {n:"Nasigoreng Combo",p:315},
+    {n:"Mixed Combo",p:340,d:"Rice / Noodles"},
+    {n:"Mongolian Chicken Combo",p:300,d:"Rice / Noodles"},
+    {n:"Lebanese Chicken Combo",p:330,d:"Rice / Noodles / Thai Rice / Garlic Rice"},
+    {n:"Lebanese Chicken Combo — Panne",p:345}
+  ]},
+  { title:"Salad", items:[
+    {n:"Chef Salad",p:60},{n:"Chicken Caesar Salad",p:78},{n:"Tuna Pasta Salad",p:75},
+    {n:"Vegetable Salad",p:40},{n:"Japanese Salad",p:40},{n:"Chilli Onion Salad",p:30},
+    {n:"Coleslaw",p:32},{n:"Green Salad",p:40},{n:"Fruit Salad",p:40}
+  ]},
+  { title:"Ice Cream", items:[
+    {n:"Ice Cone",p:20},
+    {n:"Ice Cream — Single Scoop",p:15,d:"Chocolate, Strawberry, Vanilla"},
+    {n:"Ice Cream — Double Scoop",p:30,d:"Chocolate, Strawberry, Vanilla"},
+    {n:"Ice Cream — Triple Scoop",p:45,d:"Chocolate, Strawberry, Vanilla"}
+  ]},
+  { title:"Extras", items:[
+    {n:"French Fries",p:28},{n:"Fried Sausage",p:20},{n:"Plain Omelette",p:12},
+    {n:"Chilli & Onion Omelette",p:20},{n:"Fish Omelette",p:25},{n:"Cheese & Tomato Omelette",p:18},
+    {n:"Parata",p:13},{n:"Roshi",p:4},{n:"Bread",p:20},{n:"Chips",p:25},
+    {n:"Sizzling Chocolate",p:50},{n:"Banana Filter",p:30},{n:"Rice Portion",p:25},{n:"Tuna Toast",p:20}
+  ]}
+];
+
+/* ---------- render ---------- */
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+const fmtPrice = p => typeof p === 'number'
+  ? `<small>MVR</small> ${p.toFixed(2)}`
+  : `<small>MVR</small> ${p}`;
+
+const main = document.getElementById('menu');
+const nav  = document.getElementById('navScroll');
+
+MENU.forEach((sec,i)=>{
+  const id = slug(sec.title);
+
+  const a = document.createElement('a');
+  a.href = '#'+id; a.textContent = sec.title; a.dataset.target = id;
+  nav.appendChild(a);
+
+  const s = document.createElement('section');
+  s.className = 'section reveal'; s.id = id;
+  s.innerHTML = `
+    <div class="section-head">
+      <span class="num">${String(i+1).padStart(2,'0')}</span>
+      <h2>${sec.title}</h2>
+    </div>
+    <div class="grid">
+      ${sec.items.map(it=>{
+        if(it.sub)  return `<div class="subhead">${it.sub}</div>`;
+        if(it.note) return `<div class="note-card">${it.note}</div>`;
+        return `<div class="item">
+          <span>
+            <span class="name">${it.n}</span>
+            ${it.d ? `<span class="desc">${it.d}</span>` : ''}
+          </span>
+          <span class="dots"></span>
+          <span class="price">${fmtPrice(it.p)}</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+  main.appendChild(s);
+});
+
+/* reveal on scroll */
+const io = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* active nav */
+const links = [...nav.querySelectorAll('a')];
+const spy = new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active', l.dataset.target===e.target.id));
+      const act = nav.querySelector('a.active');
+      if(act) act.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'});
+    }
+  });
+},{rootMargin:'-45% 0px -50% 0px'});
+document.querySelectorAll('.section').forEach(s=>spy.observe(s));
+</script>
+</body>
+</html>
