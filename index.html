@@ -513,7 +513,10 @@ const SEED_MENU = [
 
 /* ===== config ===== */
 const STORE_KEY = 'lozano_menu_v1';
-const CREDS = { user:'areeh', pass:'areeh123' };   // front-end only — see login note
+const CREDS = [                                    // front-end only — see login note
+  { user:'areeh', pass:'areeh123' },
+  { user:'zaeem', pass:'zaeem123' }
+];
 const OPEN_HOUR = 8;     // 8 AM
 const CLOSE_HOUR = 24;   // 12 AM (midnight)
 
@@ -645,7 +648,7 @@ document.getElementById('password').addEventListener('keydown',e=>{if(e.key==='E
 function tryLogin(){
   const u=document.getElementById('username').value.trim();
   const p=document.getElementById('password').value;
-  if(u===CREDS.user && p===CREDS.pass){
+  if(CREDS.some(c=>c.user===u && c.pass===p)){
     document.getElementById('loginErr').textContent='';
     document.getElementById('password').value='';
     loginOverlay.classList.remove('show');
