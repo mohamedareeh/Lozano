@@ -302,7 +302,6 @@
     <div><b>Open</b>Daily · 8 AM – 12 AM</div>
   </div>
   <div class="gst">All prices include GST</div>
-  <a class="admin-link" id="adminOpen" href="/login">Staff Login</a>
 </footer>
 
 <!-- LOGIN MODAL -->
@@ -634,7 +633,8 @@ function closeLogin(){
   loginOverlay.classList.remove('show');
   try{ if(isLoginRoute()) history.pushState(null,'','/'); }catch(e){}
 }
-document.getElementById('adminOpen').addEventListener('click',e=>{e.preventDefault();openLogin(true);});
+const _adminOpen=document.getElementById('adminOpen');
+if(_adminOpen) _adminOpen.addEventListener('click',e=>{e.preventDefault();openLogin(true);});
 document.getElementById('loginClose').onclick=closeLogin;
 loginOverlay.addEventListener('click',e=>{if(e.target===loginOverlay)closeLogin();});
 window.addEventListener('popstate',()=>{ if(isLoginRoute()) openLogin(false); else loginOverlay.classList.remove('show'); });
