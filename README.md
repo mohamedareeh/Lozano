@@ -47,3 +47,9 @@ git push -u origin main
 - `menu-data.json` — optional; created via the Publish button. Overrides the
   built-in menu when present.
 - `logo.png`, `favicon.png` — source assets (not required by the site).
+
+## Staff login URL
+The staff editor opens at **`/login`** (e.g. `https://your-site.vercel.app/login`).
+This works on Vercel via `vercel.json`, which rewrites `/login` to the page; the
+page then opens the login automatically. The footer "Staff Login" link points
+there too, and `#login` works as a fallback if a host doesn't support the rewrite.
